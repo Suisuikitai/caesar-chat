@@ -1,6 +1,5 @@
-import '../styles/globals.css'
 import '../lib/firebase'
-import '../lib/signup'
+import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
