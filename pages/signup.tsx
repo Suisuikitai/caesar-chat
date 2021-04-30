@@ -1,19 +1,19 @@
 import firebase from 'firebase/app'
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
 
 export default function signup() {
-  const [userId, setUserId] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const createUser = async (e) => {
+  const createUser = async (e: SyntheticEvent) => {
     e.preventDefault()
     firebase
       .auth()
-      .createUserWithEmailAndPassword(userId, password)
+      .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         console.log(userCredential.user)
       })
@@ -29,20 +29,26 @@ export default function signup() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <form action='post'>
-        <input
-          type='text'
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          name='userId'
-          id='userId'
-        />
-        <input
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          name='password'
-          id='password'
-        />
+        <label htmlFor='email'>
+          email
+          <input
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            name='email'
+            id='email'
+          />
+        </label>
+        <label htmlFor='password'>
+          password
+          <input
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name='password'
+            id='password'
+          />
+        </label>
         <button onClick={createUser} type='button'>
           Sign up
         </button>
