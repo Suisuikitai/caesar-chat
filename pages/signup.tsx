@@ -1,9 +1,7 @@
 import firebase from 'firebase/app'
 import Head from 'next/head'
 import React, { SyntheticEvent, useState } from 'react'
-import 'firebase/analytics'
-import 'firebase/auth'
-import 'firebase/firestore'
+import Router from 'next/router'
 
 export default function signup() {
   const [email, setEmail] = useState('')
@@ -16,6 +14,7 @@ export default function signup() {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         console.log(userCredential.user)
+        Router.router.push('/')
       })
       .catch((error) => {
         console.log(error.message)
