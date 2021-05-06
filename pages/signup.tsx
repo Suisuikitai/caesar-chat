@@ -13,7 +13,7 @@ export default function signup() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log(userCredential.user)
+        userCredential.user.sendEmailVerification()
         Router.router.push('/')
       })
       .catch((error) => {
