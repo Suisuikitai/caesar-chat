@@ -3,8 +3,7 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 import Head from 'next/head'
 
 export default function list() {
-  const [name, setName] = useState('')
-  // const [active, setActive] = useState('')
+  const [names, setNames] = useState([''])
   async function listUser() {
     const snapshot = await firebase
       .firestore()
@@ -12,10 +11,11 @@ export default function list() {
       .where('active', '==', false)
       .get()
 
-    snapshot.docs.map((doc) => {
+    const nameAry = snapshot.docs.map((doc) => {
       const name = doc.data().name
-      setName(name)
+      return name
     })
+    setNames(nameAry)
   }
 
   useEffect(() => {
@@ -23,8 +23,7 @@ export default function list() {
       return
     }
     listUser()
-    // console.log(actives)
-  }, [name])
+  }, [])
 
   return (
     <div>
@@ -33,7 +32,11 @@ export default function list() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <h1>Hello World!</h1>
-      <div>{name}</div>
+      {names.map((name) => (
+        <div key={name}>
+          <h3>{name}</h3>
+        </div>
+      ))}
     </div>
   )
 }
