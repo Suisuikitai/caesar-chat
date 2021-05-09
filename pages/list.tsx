@@ -5,11 +5,14 @@ import Link from 'next/link'
 
 export default function list() {
   const [names, setNames] = useState([''])
+  const email = firebase.firestore()
   async function listUser() {
+    const user = firebase.auth().currentUser
+    if (user === null) throw Error
     const snapshot = await firebase
       .firestore()
       .collection('users')
-      .where('active', '==', true)
+      .where('email_address', '!=', user.email)
       .get()
 
     const nameAry = snapshot.docs.map((doc) => {

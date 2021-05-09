@@ -8,6 +8,5 @@ import { formatWithValidation } from 'next/dist/next-server/lib/utils'
 
 export interface User {
   uid: string
-  isActive: boolean
   email: string
 }
