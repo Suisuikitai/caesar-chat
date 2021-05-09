@@ -11,15 +11,28 @@ export default function UserShow() {
     e.preventDefault()
     firebase.firestore().collection('messages').add({
       body: messageBody,
-      create_at: new Date(),
+      create_at: firebase.firestore.FieldValue.serverTimestamp(),
+      uid: uid,
     })
-    return
+
+    router.push('/')
   }
 
   return (
     <div>
       <h3>{router.query.uid}</h3>
-      <form action='' onSubmit={onSubmit}></form>
+      <form action='' onSubmit={onSubmit}>
+        <textarea
+          name='message'
+          id='message'
+          cols={30}
+          rows={10}
+          value={messageBody}
+          onChange={(e) => {
+            setMessageBody(e.target.value)
+          }}
+        ></textarea>
+      </form>
     </div>
   )
 }
