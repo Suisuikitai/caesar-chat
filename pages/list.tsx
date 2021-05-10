@@ -5,10 +5,8 @@ import Link from 'next/link'
 
 export default function list() {
   const [names, setNames] = useState([''])
-  const email = firebase.firestore()
   async function listUser() {
     const user = firebase.auth().currentUser
-    if (user === null) throw Error
     const snapshot = await firebase
       .firestore()
       .collection('users')
@@ -17,6 +15,7 @@ export default function list() {
 
     const nameAry = snapshot.docs.map((doc) => {
       const name = doc.data().name
+      console.log(name)
       return name
     })
     setNames(nameAry)
@@ -37,12 +36,11 @@ export default function list() {
       </Head>
       <h1>Hello World!</h1>
       {names.map((name) => (
-        <div key={name}>
-          <h3>{name}</h3>
-        </div>
-      ))}
-      {names.map((name) => (
-        <Link href={`/users/`}></Link>
+        <Link href={`/users/${name}`} key={name}>
+          <div>
+            <a href=''>{name}</a>
+          </div>
+        </Link>
       ))}
     </div>
   )
