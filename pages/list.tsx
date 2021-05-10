@@ -2,9 +2,11 @@ import firebase from 'firebase/app'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { User } from '../models/User'
 
 export default function list() {
-  const [names, setNames] = useState([''])
+  //ここをUserオブジェクトに変える
+  const [users, setUsers] = useState([new User('', '', '')])
   async function listUser() {
     const user = firebase.auth().currentUser
     const snapshot = await firebase
@@ -13,12 +15,16 @@ export default function list() {
       .where('email_address', '!=', user.email)
       .get()
 
-    const nameAry = snapshot.docs.map((doc) => {
+    const userAry = snapshot.docs.map((doc) => {
+      const uid = doc.data().uid
       const name = doc.data().name
+      const email_address = doc.data().email_address
+      console.log(uid)
       console.log(name)
-      return name
+      console.log(email_address)
+      return new User(uid, name, email_address)
     })
-    setNames(nameAry)
+    setUsers(userAry)
   }
 
   useEffect(() => {
@@ -35,10 +41,10 @@ export default function list() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <h1>Hello World!</h1>
-      {names.map((name) => (
-        <Link href={`/users/${name}`} key={name}>
+      {users.map((user) => (
+        <Link href={`/users/${user.uid}`} key={user.uid}>
           <div>
-            <a href=''>{name}</a>
+            <a href=''>{user.name}</a>
           </div>
         </Link>
       ))}
