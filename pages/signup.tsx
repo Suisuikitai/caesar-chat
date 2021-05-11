@@ -6,6 +6,7 @@ import Router from 'next/router'
 export default function signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
 
   const createUser = async (e: SyntheticEvent) => {
     e.preventDefault()
@@ -14,6 +15,14 @@ export default function signup() {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         userCredential.user.sendEmailVerification()
+        const userRef = firebase.firestore().collection('users').doc()
+        userRef.set({
+          email_address: email,
+          uid: userCredential.user.uid,
+          name: name,
+        })
+      })
+      .then(() => {
         Router.router.push('/')
       })
       .catch((error) => {
@@ -46,6 +55,16 @@ export default function signup() {
             onChange={(e) => setPassword(e.target.value)}
             name='password'
             id='password'
+          />
+        </label>
+        <label htmlFor='name'>
+          user name
+          <input
+            type='text'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            name='name'
+            id='name'
           />
         </label>
         <button onClick={createUser} type='button'>

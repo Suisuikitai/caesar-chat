@@ -31,7 +31,12 @@ export default function Home() {
 
       <main className={styles.main}>
         <div>
-          <form action='' method='post' className='signInForm'>
+          <form
+            action=''
+            method='post'
+            className='signInForm'
+            onSubmit={handleSubmit}
+          >
             <label htmlFor='email'>
               email
               <input
@@ -52,9 +57,7 @@ export default function Home() {
                 id='password'
               />
             </label>
-            <button type='submit' onClick={handleSubmit}>
-              ログイン
-            </button>
+            <button type='submit'>ログイン</button>
           </form>
         </div>
       </main>
