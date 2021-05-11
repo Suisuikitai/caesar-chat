@@ -18,6 +18,7 @@ export default function UserShow() {
     router.push('/')
   }
 
+  //uidをもとにユーザ情報を引っ張ってくる
   return (
     <div>
       <h3>{router.query.uid}</h3>

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { User } from '../models/User'
 
 export default function list() {
-  //ここをUserオブジェクトに変える
   const [users, setUsers] = useState([new User('', '', '')])
   async function listUser() {
     const user = firebase.auth().currentUser
