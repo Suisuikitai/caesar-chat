@@ -18,9 +18,6 @@ export default function list() {
       const uid = doc.data().uid
       const name = doc.data().name
       const email_address = doc.data().email_address
-      console.log(uid)
-      console.log(name)
-      console.log(email_address)
       return new User(uid, name, email_address)
     })
     setUsers(userAry)
